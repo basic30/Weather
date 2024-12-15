@@ -52,9 +52,8 @@ function displayWeather(data) {
     } else if (weatherCondition.includes("rain")) {
         weatherIcon = "🌧"; // Rainy
     } else if (weatherCondition.includes("snow")) {
-        weatherIcon = "❄"; // Snowy
-    } 
-    else if (weatherCondition.includes("haze")) {
+        weatherIcon = "❄"; // Snow 
+    } else if (weatherCondition.includes("haze")) {
         weatherIcon = "🌫"; // Haze
     } else {
         weatherIcon = "🌤"; // Default
