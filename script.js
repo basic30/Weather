@@ -53,8 +53,11 @@ function displayWeather(data) {
         weatherIcon = "🌧"; // Rainy
     } else if (weatherCondition.includes("snow")) {
         weatherIcon = "❄"; // Snowy
+    } 
+    else if (weatherCondition.includes("haze")) {
+        weatherIcon = "🌫"; // Haze
     } else {
-        weatherIcon = "🌡"; // Default
+        weatherIcon = "🌤"; // Default
     }
 
     // Update temperature with dynamic icon
