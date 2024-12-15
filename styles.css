@@ -85,6 +85,13 @@ header h1 {
     justify-content: center;
 }
 
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
 .temperature span {
     margin-right: 5px;
 }
