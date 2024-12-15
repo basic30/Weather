@@ -10,6 +10,7 @@ const descriptionElement = document.getElementById("description");
 const humidityElement = document.getElementById("humidity");
 const windElement = document.getElementById("wind");
 const rainStatusElement = document.getElementById("rain-status");
+const weatherIconElement = document.getElementById("weather-icon"); // Add an element for the weather icon
 
 searchButton.addEventListener("click", () => {
     const city = cityInput.value.trim();
@@ -41,26 +42,7 @@ function displayWeather(data) {
     weatherDetails.classList.remove("hidden");
 
     locationName.textContent = `${data.name}, ${data.sys.country}`;
-
-    // Check the weather condition and update the icon dynamically
-    const weatherCondition = data.weather[0].main.toLowerCase();
-    let weatherIcon = "";
-    if (weatherCondition.includes("clear")) {
-        weatherIcon = "☀"; // Sunny
-    } else if (weatherCondition.includes("cloud")) {
-        weatherIcon = "🌥"; // Cloudy
-    } else if (weatherCondition.includes("rain")) {
-        weatherIcon = "🌧"; // Rainy
-    } else if (weatherCondition.includes("snow")) {
-        weatherIcon = "❄"; // Snow 
-    } else if (weatherCondition.includes("haze")) {
-        weatherIcon = "🌫"; // Haze
-    } else {
-        weatherIcon = "🌤"; // Default
-    }
-
-    // Update temperature with dynamic icon
-    tempElement.innerHTML = `${Math.round(data.main.temp)}°C <span class="icon">${weatherIcon}</span>`;
+    tempElement.textContent = `${Math.round(data.main.temp)}°C`;
 
     // Update weather description
     descriptionElement.textContent = data.weather[0].description
@@ -79,5 +61,13 @@ function displayWeather(data) {
         rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
     } else {
         rainStatusElement.textContent = "Rainfall: No rain recorded";
+    }
+
+    // Set weather icon based on time of day
+    const iconCode = data.weather[0].icon;
+    if (iconCode.includes("d")) {
+        weatherIconElement.textContent = "☀"; // Daytime icon
+    } else if (iconCode.includes("n")) {
+        weatherIconElement.textContent = "🌙"; // Nighttime icon
     }
 }
