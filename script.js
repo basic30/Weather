@@ -42,8 +42,23 @@ function displayWeather(data) {
 
     locationName.textContent = `${data.name}, ${data.sys.country}`;
 
-    // Update temperature (no need to add ☀ since it's in HTML)
-    tempElement.textContent = `${Math.round(data.main.temp)}°C`;
+    // Check the weather condition and update the icon dynamically
+    const weatherCondition = data.weather[0].main.toLowerCase();
+    let weatherIcon = "";
+    if (weatherCondition.includes("clear")) {
+        weatherIcon = "☀"; // Sunny
+    } else if (weatherCondition.includes("cloud")) {
+        weatherIcon = "🌥"; // Cloudy
+    } else if (weatherCondition.includes("rain")) {
+        weatherIcon = "🌧"; // Rainy
+    } else if (weatherCondition.includes("snow")) {
+        weatherIcon = "❄"; // Snowy
+    } else {
+        weatherIcon = "🌡"; // Default
+    }
+
+    // Update temperature with dynamic icon
+    tempElement.innerHTML = `${Math.round(data.main.temp)}°C <span class="icon">${weatherIcon}</span>`;
 
     // Update weather description
     descriptionElement.textContent = data.weather[0].description
@@ -51,13 +66,13 @@ function displayWeather(data) {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
-    // Update humidity (no need to add 💧 since it's in HTML)
+    // Update humidity
     humidityElement.textContent = `${data.main.humidity}%`;
 
-    // Update wind speed (no need to add 💨 since it's in HTML)
+    // Update wind speed
     windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
 
-    // Check and display rain status (no need to add 🌧 since it's in HTML)
+    // Update rain status
     if (data.rain && data.rain["1h"]) {
         rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
     } else {
