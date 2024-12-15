@@ -80,8 +80,4 @@ function displayWeather(data) {
     } else {
         rainStatusElement.textContent = "Rainfall: No rain recorded";
     }
-    const iconCode = data.weather[0].icon;
-    if (iconCode.includes("n")) {
-        weatherIconElement.textContent = "🌙"; // Daytime icon
-    }
 }
