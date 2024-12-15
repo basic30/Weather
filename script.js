@@ -9,8 +9,6 @@ const tempElement = document.getElementById("temp");
 const descriptionElement = document.getElementById("description");
 const humidityElement = document.getElementById("humidity");
 const windElement = document.getElementById("wind");
-
-// Add rain status section
 const rainStatusElement = document.getElementById("rain-status");
 
 searchButton.addEventListener("click", () => {
@@ -43,26 +41,26 @@ function displayWeather(data) {
     weatherDetails.classList.remove("hidden");
 
     locationName.textContent = `${data.name}, ${data.sys.country}`;
-    
-    // Update temperature with sun icon
-    tempElement.innerHTML = `${Math.round(data.main.temp)}°C <span class="icon">☀</span>`;
-    
-    // Update description of weather
+
+    // Update temperature (no need to add ☀ since it's in HTML)
+    tempElement.textContent = `${Math.round(data.main.temp)}°C`;
+
+    // Update weather description
     descriptionElement.textContent = data.weather[0].description
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
-    // Update humidity with droplet icon
-    humidityElement.innerHTML = `Humidity: ${data.main.humidity}% <span class="icon">💧</span>`;
-    
-    // Update wind speed with wind icon
-    windElement.innerHTML = `Wind Speed: ${(data.wind.speed * 3.6).toFixed(1)} km/h <span class="icon">💨</span>`;
+    // Update humidity (no need to add 💧 since it's in HTML)
+    humidityElement.textContent = `${data.main.humidity}%`;
 
-    // Check and display rain status
+    // Update wind speed (no need to add 💨 since it's in HTML)
+    windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
+
+    // Check and display rain status (no need to add 🌧 since it's in HTML)
     if (data.rain && data.rain["1h"]) {
-        rainStatusElement.innerHTML = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm <span class="icon">🌧</span>`;
+        rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
     } else {
-        rainStatusElement.innerHTML = "Rainfall: No rain recorded <span class='icon'>🌧</span>";
+        rainStatusElement.textContent = "Rainfall: No rain recorded";
     }
 }
