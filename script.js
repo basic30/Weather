@@ -1,4 +1,3 @@
-// script.js
 const apiKey = "689eb33c48d88f1fb4acbc7ea86949b1"; // Your OpenWeatherMap API key
 
 const searchButton = document.getElementById("search-button");
@@ -10,6 +9,11 @@ const tempElement = document.getElementById("temp");
 const descriptionElement = document.getElementById("description");
 const humidityElement = document.getElementById("humidity");
 const windElement = document.getElementById("wind");
+
+// Add rain status element
+const rainStatusElement = document.createElement("p");
+rainStatusElement.id = "rain-status";
+weatherDetails.appendChild(rainStatusElement);
 
 searchButton.addEventListener("click", () => {
     const city = cityInput.value.trim();
@@ -48,4 +52,11 @@ function displayWeather(data) {
         .join(" ");
     humidityElement.textContent = data.main.humidity;
     windElement.textContent = (data.wind.speed * 3.6).toFixed(1); // Convert m/s to km/h
+
+    // Check and display rain status
+    if (data.rain && data.rain["1h"]) {
+        rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
+    } else {
+        rainStatusElement.textContent = "Rainfall: No rain recorded";
     }
+}
