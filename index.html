@@ -18,35 +18,28 @@
                 <input type="text" id="city" placeholder="Enter a city name" autofocus>
                 <button id="search-button">Search</button>
             </div>
+
+            <!-- Weather details section -->
             <div id="weather-details" class="hidden">
-    <h2 id="location"></h2>
-    <div class="weather-info">
-        <div class="temperature">
-            <span id="temp">--</span>
-            <span></span>
-        </div>
-        <p id="description"></p>
-    </div>
-                <div id="weather-details" class="hidden">
-    <h2 id="location"></h2>
-    <div class="weather-info">
-        <div class="temperature">
-            <span id="temp">--</span>
-            <span>°C</span>
-        </div>
-        <p id="description"></p>
-    </div>
-    <div class="additional-info">
-        <p>Humidity: <span id="humidity">--</span>%</p>
-        <p>Wind Speed: <span id="wind">--</span> km/h</p>
-        <p id="rain-status">Rainfall: --</p>
-    </div>
+                <h2 id="location"></h2>
+                <div class="weather-info">
+                    <div class="temperature">
+                        <span id="temp">--</span><span>°C</span> <span class="icon">☀</span>
+                    </div>
+                    <p id="description"></p>
                 </div>
+                <div class="additional-info">
+                    <p>Humidity: <span id="humidity">--</span>% <span class="icon">💧</span></p>
+                    <p>Wind Speed: <span id="wind">--</span> km/h <span class="icon">💨</span></p>
+                    <p id="rain-status">Rainfall: -- <span class="icon">🌧</span></p>
+                </div>
+            </div>
         </main>
         <footer>
             <p>Powered by <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
         </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
