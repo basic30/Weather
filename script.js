@@ -10,10 +10,23 @@ const descriptionElement = document.getElementById("description");
 const humidityElement = document.getElementById("humidity");
 const windElement = document.getElementById("wind");
 
-// Add rain status element
+// Add rain and icons
 const rainStatusElement = document.createElement("p");
 rainStatusElement.id = "rain-status";
 weatherDetails.appendChild(rainStatusElement);
+
+const temperatureIcon = document.createElement("img");
+temperatureIcon.src = "https://cdn-icons-png.flaticon.com/512/869/869869.png"; // Sun icon URL
+temperatureIcon.alt = "Sun";
+temperatureIcon.className = "icon";
+
+const humidityIcon = document.createElement("img");
+humidityIcon.src = "https://cdn-icons-png.flaticon.com/512/728/728093.png"; // Humidity icon URL
+humidityIcon.alt = "Humidity";
+humidityIcon.className = "icon";
+
+const rainIcon = document.createElement("span"); // Use text emoji 🌧
+rainIcon.textContent = "🌧";
 
 searchButton.addEventListener("click", () => {
     const city = cityInput.value.trim();
@@ -45,18 +58,33 @@ function displayWeather(data) {
     weatherDetails.classList.remove("hidden");
 
     locationName.textContent = `${data.name}, ${data.sys.country}`;
-    tempElement.textContent = Math.round(data.main.temp);
+    tempElement.textContent = `${Math.round(data.main.temp)}°C`;
+    if (!tempElement.contains(temperatureIcon)) {
+        tempElement.appendChild(temperatureIcon);
+    }
+
     descriptionElement.textContent = data.weather[0].description
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
-    humidityElement.textContent = data.main.humidity;
-    windElement.textContent = (data.wind.speed * 3.6).toFixed(1); // Convert m/s to km/h
+
+    humidityElement.textContent = `Humidity: ${data.main.humidity}%`;
+    if (!humidityElement.contains(humidityIcon)) {
+        humidityElement.appendChild(humidityIcon);
+    }
+
+    windElement.textContent = `Wind Speed: ${(data.wind.speed * 3.6).toFixed(1)} km/h`;
 
     // Check and display rain status
     if (data.rain && data.rain["1h"]) {
-        rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
+        rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm `;
+        if (!rainStatusElement.contains(rainIcon)) {
+            rainStatusElement.appendChild(rainIcon);
+        }
     } else {
-        rainStatusElement.textContent = "Rainfall: No rain recorded";
+        rainStatusElement.textContent = "Rainfall: No rain recorded ";
+        if (!rainStatusElement.contains(rainIcon)) {
+            rainStatusElement.appendChild(rainIcon);
+        }
     }
 }
