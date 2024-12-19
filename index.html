@@ -5,33 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Now</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script type="module" src="script.js" defer></script>
 </head>
 <body>
     <div class="min-h-screen bg-gradient p-4 flex-center">
-        <div class="card w-full max-w-md">
+        <div class="card w-full max-w-md animate-slide-in">
             <div class="card-header">
-    <h1 class="card-title">
-        <i class="fas fa-cloud"></i> <!-- Font Awesome cloud icon -->
-        Weather Now
-    </h1>
+                <h1 class="card-title">
+                    <i class="fas fa-cloud"></i> <!-- Font Awesome Cloud Icon -->
+                    Weather Now
+                </h1>
             </div>
             <div class="card-content">
                 <div class="search-box">
                     <input type="text" id="city" placeholder="Enter a city name" autofocus required>
                     <button id="search-button">
-    <i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+                        <i class="fas fa-search"></i> <!-- Font Awesome Search Icon -->
                     </button>
                 </div>
 
                 <!-- Weather details section -->
-                <div id="weather-details" class="mt-6 space-y-4 hidden">
+                <div id="weather-details" class="hidden mt-6 space-y-4 animate-fade-in">
                     <h2 id="location" class="text-center"></h2>
                     <div class="flex-center gap-4">
-                        <i data-lucide="cloud-rain" class="h-16 w-16 text-blue-500"></i>
-                        <div class="temperature text-4xl font-bold" id="temp">
-                            -- <span></span>
-                        </div>
+                        <i id="weather-icon" class="h-16 w-16 text-blue-500"></i>
+                        <div class="temperature text-4xl font-bold" id="temp">--</div>
                     </div>
                     <div id="description" class="text-center text-lg font-medium"></div>
                     <div class="grid-2 gap-4 pt-4 border-t">
@@ -44,17 +42,20 @@
                             <div id="wind" class="font-medium">--</div>
                         </div>
                     </div>
-                    <div id="rain-status" class="text-center text-sm text-gray-500 font-medium">
-    Rainfall: <span class="icon">🌧</span>
+                    <div id="rain-status" class="hidden text-center">
+                        <div class="text-sm text-gray-500">Rainfall</div>
+                        <div id="rainfall" class="font-medium">--</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <footer class="mt-4 text-sm text-center text-gray-600">
-            Download The App Made By Snahasish <a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">Weather Now</a>
+            Made By Snahasish. Download the App: 
+            <a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">
+                Weather Now
+            </a>
         </footer>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
