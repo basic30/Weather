@@ -10,21 +10,25 @@ export function displayWeather(data) {
     const weatherIconElement = document.getElementById("weather-icon");
 
     // Show weather details
-    weatherDetails.classList.remove("hidden");
+    if (weatherDetails) weatherDetails.classList.remove("hidden");
 
     // Update data
-    locationName.textContent = `${data.name}, ${data.sys.country}`;
-    tempElement.innerHTML = `${Math.round(data.main.temp)}°C`;
-    descriptionElement.textContent = capitalizeFirstLetter(data.weather[0].description);
-    humidityElement.textContent = `${data.main.humidity}%`;
-    windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
+    if (locationName) locationName.textContent = `${data.name}, ${data.sys.country}`;
+    if (tempElement) tempElement.innerHTML = `${Math.round(data.main.temp)}°C`;
+    if (descriptionElement) {
+        descriptionElement.textContent = capitalizeFirstLetter(data.weather[0].description);
+    }
+    if (humidityElement) humidityElement.textContent = `${data.main.humidity}%`;
+    if (windElement) windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
 
     // Handle rainfall visibility
-    if (data.rain && data.rain["1h"]) {
-        rainStatusElement.textContent = `Rainfall: ${data.rain["1h"]} mm`;
-        rainStatusElement.style.display = "block";
-    } else {
-        rainStatusElement.style.display = "none";
+    if (rainStatusElement) {
+        if (data.rain && data.rain["1h"]) {
+            rainStatusElement.textContent = `Rainfall: ${data.rain["1h"]} mm`;
+            rainStatusElement.style.display = "block";
+        } else {
+            rainStatusElement.style.display = "none";
+        }
     }
 
     // Dynamically update the weather icon
@@ -46,7 +50,7 @@ export function displayWeather(data) {
     }
 
     // Apply the icon class dynamically
-    weatherIconElement.className = `${weatherIconClass} responsive-icon`;
+    if (weatherIconElement) weatherIconElement.className = `${weatherIconClass} responsive-icon`;
 }
 
 // Helper Function
@@ -63,19 +67,22 @@ async function fetchWeather(city) {
         );
         const data = await response.json();
 
-        if (data.cod === 200) {
+        if (response.ok) {
             displayWeather(data);
         } else {
-            alert(data.message);
+            alert(data.message || "City not found. Please check the name.");
         }
     } catch (error) {
-        alert("Error fetching weather data. Please try again.");
+        alert("Error fetching weather data. Please check your network connection and try again.");
+        console.error(error);
     }
 }
 
 // Handle Search Button Click
 document.getElementById("search-button").addEventListener("click", () => {
-    const city = document.getElementById("city").value.trim();
+    const cityInput = document.getElementById("city");
+    const city = cityInput ? cityInput.value.trim() : "";
+
     if (city) {
         fetchWeather(city);
     } else {
@@ -84,16 +91,19 @@ document.getElementById("search-button").addEventListener("click", () => {
 });
 
 // Add Responsive Class to Icons Dynamically
-window.addEventListener("resize", () => {
+function updateIconResponsiveness() {
     const weatherIconElement = document.getElementById("weather-icon");
-    if (window.innerWidth < 600) {
-        weatherIconElement.classList.add("small-icon");
-    } else {
-        weatherIconElement.classList.remove("small-icon");
+    if (weatherIconElement) {
+        if (window.innerWidth < 600) {
+            weatherIconElement.classList.add("small-icon");
+        } else {
+            weatherIconElement.classList.remove("small-icon");
+        }
     }
-});
+}
+
+// Attach event listener for responsiveness
+window.addEventListener("resize", updateIconResponsiveness);
 
 // Initial Check for Responsiveness
-if (window.innerWidth < 600) {
-    document.getElementById("weather-icon").classList.add("small-icon");
-}
+updateIconResponsiveness();
