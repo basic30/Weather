@@ -1,4 +1,4 @@
-// Display Weather Data with Icons and Responsiveness
+// Import or define the displayWeather function
 export function displayWeather(data) {
     const weatherDetails = document.getElementById("weather-details");
     const locationName = document.getElementById("location");
@@ -52,4 +52,48 @@ export function displayWeather(data) {
 // Helper Function
 function capitalizeFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+// Fetch Weather Data
+async function fetchWeather(city) {
+    const apiKey = "689eb33c48d88f1fb4acbc7ea86949b1"; // Replace with your OpenWeatherMap API key
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+        const data = await response.json();
+
+        if (data.cod === 200) {
+            displayWeather(data);
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        alert("Error fetching weather data. Please try again.");
+    }
+}
+
+// Handle Search Button Click
+document.getElementById("search-button").addEventListener("click", () => {
+    const city = document.getElementById("city").value.trim();
+    if (city) {
+        fetchWeather(city);
+    } else {
+        alert("Please enter a city name.");
+    }
+});
+
+// Add Responsive Class to Icons Dynamically
+window.addEventListener("resize", () => {
+    const weatherIconElement = document.getElementById("weather-icon");
+    if (window.innerWidth < 600) {
+        weatherIconElement.classList.add("small-icon");
+    } else {
+        weatherIconElement.classList.remove("small-icon");
+    }
+});
+
+// Initial Check for Responsiveness
+if (window.innerWidth < 600) {
+    document.getElementById("weather-icon").classList.add("small-icon");
 }
