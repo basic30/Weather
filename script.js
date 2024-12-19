@@ -74,10 +74,11 @@ function displayWeather(data) {
     // Update wind speed
     windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
 
-    // Update rain status
+    // Conditionally display rain status
     if (data.rain && data.rain["1h"]) {
-        rainStatusElement.textContent = `Rainfall (Last 1 Hour): ${data.rain["1h"]} mm`;
+        rainStatusElement.classList.remove("hidden");
+        document.getElementById("rainfall-value").textContent = `${data.rain["1h"]} mm`;
     } else {
-        rainStatusElement.textContent = "Rainfall: No rain recorded";
+        rainStatusElement.classList.add("hidden");
     }
 }
