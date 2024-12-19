@@ -1,5 +1,25 @@
-export function displayWeather(data) {
-    console.log(data);  // Check if the data is being passed correctly
+// Fetch Weather Data
+async function fetchWeather(city) {
+    const apiKey = "689eb33c48d88f1fb4acbc7ea86949b1"; // Replace with your OpenWeatherMap API key
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+            displayWeather(data);
+        } else {
+            alert(data.message || "City not found. Please check the name.");
+        }
+    } catch (error) {
+        alert("Error fetching weather data. Please check your network connection and try again.");
+        console.error(error);
+    }
+}
+
+// Display Weather Function
+function displayWeather(data) {
     const weatherDetails = document.getElementById("weather-details");
     const locationName = document.getElementById("location");
     const tempElement = document.getElementById("temp");
@@ -52,3 +72,20 @@ export function displayWeather(data) {
     // Apply the icon class dynamically
     if (weatherIconElement) weatherIconElement.className = `${weatherIconClass} responsive-icon`;
 }
+
+// Helper Function
+function capitalizeFirstLetter(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+// Handle Search Button Click
+document.getElementById("search-button").addEventListener("click", () => {
+    const cityInput = document.getElementById("city");
+    const city = cityInput ? cityInput.value.trim() : "";
+
+    if (city) {
+        fetchWeather(city);
+    } else {
+        alert("Please enter a city name.");
+    }
+});
