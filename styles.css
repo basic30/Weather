@@ -44,6 +44,13 @@ body {
     overflow: hidden;
 }
 
+#location {
+    text-align: center; /* Center the location name text */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
 .card-header {
     padding: 1rem;
     background-color: #3b82f6;
@@ -160,6 +167,6 @@ body {
 
 @media (max-width: 640px) {
     .hidden-mobile {
-        display: none;
+        display: inline;
     }
 }
