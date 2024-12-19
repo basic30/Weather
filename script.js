@@ -1,5 +1,6 @@
 // Import or define the displayWeather function
 export function displayWeather(data) {
+    console.log(data);
     const weatherDetails = document.getElementById("weather-details");
     const locationName = document.getElementById("location");
     const tempElement = document.getElementById("temp");
