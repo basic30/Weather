@@ -47,7 +47,7 @@ body {
 #rain-status {
     font-size: 1rem; /* Same font size as humidity */
     font-weight: 500; /* Medium font weight */
-    color: #4b5563; /* Same color as humidity text */
+    color: #6b7280; /* Same color as humidity text */
     text-align: center; /* Center text */
     margin-top: 1rem; /* Optional for spacing */
 }
