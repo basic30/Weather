@@ -55,6 +55,7 @@ function displayWeather(data) {
     const weatherCondition = data.weather[0].main.toLowerCase();
     let weatherIconClass = "fas fa-cloud"; // Default icon
 
+    // Apply different icons based on weather condition
     if (weatherCondition.includes("clear")) {
         weatherIconClass = "fas fa-sun text-yellow-400"; // Sunny
     } else if (weatherCondition.includes("cloud")) {
@@ -77,15 +78,3 @@ function displayWeather(data) {
 function capitalizeFirstLetter(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
-
-// Handle Search Button Click
-document.getElementById("search-button").addEventListener("click", () => {
-    const cityInput = document.getElementById("city");
-    const city = cityInput ? cityInput.value.trim() : "";
-
-    if (city) {
-        fetchWeather(city);
-    } else {
-        alert("Please enter a city name.");
-    }
-});
