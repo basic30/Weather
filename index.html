@@ -5,41 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Now</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <h1>Weather Now</h1>
-        </header>
-        <main>
-            <div class="search-box">
-                <input type="text" id="city" placeholder="Enter a city name" autofocus>
-                <button id="search-button">Search</button>
+    <div class="min-h-screen bg-gradient p-4 flex-center">
+        <div class="card w-full max-w-md">
+            <div class="card-header">
+                <h1 class="card-title">
+                    <i data-lucide="cloud"></i>
+                    Weather Now
+                </h1>
             </div>
+            <div class="card-content">
+                <div class="search-box">
+                    <input type="text" id="city" placeholder="Enter a city name" autofocus required>
+                    <button id="search-button">
+                        <i data-lucide="search"></i>
+                        <span class="ml-2 hidden-mobile">Search</span>
+                    </button>
+                </div>
 
-            <!-- Weather details section -->
-            <div id="weather-details" class="hidden">
-                <h2 id="location"></h2>
-                <div class="weather-info">
-                    <div class="temperature">
-                        <span id="temp">--</span><span></span> <span class="icon"></span>
+                <!-- Weather details section -->
+                <div id="weather-details" class="mt-6 space-y-4 hidden">
+                    <div class="flex-center gap-4">
+                        <i data-lucide="cloud-rain" class="h-16 w-16 text-blue-500"></i>
+                        <div class="temperature text-4xl font-bold" id="temp">
+                            -- <span></span>
+                        </div>
                     </div>
-                    <p id="description"></p>
-                </div>
-                <div class="additional-info">
-                    <p>Humidity: <span id="humidity">--</span><span class="icon">💧</span></p>
-                    <p>Wind Speed: <span id="wind">--</span><span class="icon">💨</span></p>
-                    <p id="rain-status">Rainfall: -- <span class="icon">🌧</span></p>
+                    <div id="description" class="text-center text-lg font-medium"></div>
+                    <div class="grid-2 gap-4 pt-4 border-t">
+                        <div class="text-center">
+                            <div class="text-sm text-gray-500">Humidity</div>
+                            <div id="humidity" class="font-medium">--</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-500">Wind Speed</div>
+                            <div id="wind" class="font-medium">--</div>
+                        </div>
+                    </div>
+                    <div id="rain-status" class="text-center text-lg font-medium">
+                        Rainfall: -- <span class="icon">🌧</span>
+                    </div>
                 </div>
             </div>
-        </main>
-        <footer>
-            <p>Download The App Made By Snahasish <a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">Weather Now</a></p>
+        </div>
+
+        <footer class="mt-4 text-sm text-center text-gray-600">
+            Download The App Made By Snahasish <a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">Weather Now</a>
         </footer>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
