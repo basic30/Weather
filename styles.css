@@ -12,8 +12,10 @@ body {
 }
 
 .min-h-screen {
-    min-height: 100vh;
-}
+    min-height: 100vh; /* Ensures full screen height */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center the card vertically */
+    justify-content
 
 .bg-gradient {
     background: linear-gradient(to bottom, #cfe7f7, #e0f2fe);
@@ -32,7 +34,10 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    animation: fadeIn 0.8s ease-out;
+    padding: 1rem; /* Add padding */
+    width: 100%; /* Ensure it uses the full width of its parent */
+    max-width: 400px; /* Adjust maximum width as needed */
+    margin: 0 auto; /* Center the card */
 }
 
 .card-header {
