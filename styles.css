@@ -170,3 +170,47 @@ body {
         display: inline;
     }
 }
+
+#weather-icon {
+    font-size: 3rem;
+    animation: pulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #weather-icon {
+        font-size: 2.5rem;
+    }
+
+    #temp {
+        font-size: 2rem;
+    }
+
+    .text-lg {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #weather-icon {
+        font-size: 2rem;
+    }
+
+    #temp {
+        font-size: 1.5rem;
+    }
+
+    .text-lg {
+        font-size: 0.875rem;
+    }
+}
+
+/* Animation for Icon */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
