@@ -51,6 +51,10 @@ body {
     margin-bottom: 1rem;
 }
 
+#temp {
+    color: #374151; /* Tailwind's gray-700 color */
+}
+
 .card-header {
     padding: 1rem;
     background-color: #3b82f6;
