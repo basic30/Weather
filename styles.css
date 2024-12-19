@@ -5,57 +5,68 @@
     box-sizing: border-box;
 }
 
+/* Body Styling */
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(to bottom, #cfe7f7, #e0f2fe);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
 }
 
+/* Utility Classes */
 .min-h-screen {
-    min-height: 100vh; /* Ensures full screen height */
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center the card vertically */
-    justify-content
-
-.bg-gradient {
-    background: linear-gradient(to bottom, #cfe7f7, #e0f2fe);
+    min-height: 100vh;
 }
 
 .flex-center {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    flex-direction: column;
 }
 
+.w-full {
+    width: 100%;
+}
+
+.max-w-md {
+    max-width: 28rem;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+/* Card Styling */
 .card {
-    background-color: white;
-    border-radius: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    padding: 1rem; /* Add padding */
-    width: 100%; /* Ensure it uses the full width of its parent */
-    max-width: 400px; /* Adjust maximum width as needed */
-    margin: 0 auto; /* Center the card */
 }
 
+/* Card Header Styling */
 .card-header {
-    padding: 1rem;
     background-color: #3b82f6;
     color: white;
+    padding: 1rem;
+    text-align: center;
 }
 
 .card-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.5rem;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 0.5rem;
 }
 
-.card-content{
+/* Card Content Styling */
+.card-content {
     padding: 1rem;
 }
 
@@ -63,119 +74,90 @@ body {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    justify-content: center;
 }
 
 .search-box input {
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
     flex: 1;
+    padding: 0.5rem;
     font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
 }
 
 .search-box button {
-    padding: 0.5rem;
-    border: none;
     background-color: #3b82f6;
     color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
 }
 
 .search-box button:hover {
     background-color: #2563eb;
 }
 
+/* Weather Details Styling */
+#weather-details {
+    margin-top: 1rem;
+    display: none;
+}
+
+#location {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.temperature {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #ef4444;
+}
+
 .text-gray-500 {
     color: #6b7280;
+}
+
+.text-blue-500 {
+    color: #3b82f6;
 }
 
 .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-.hidden {
-    display: none;
+.text-sm {
+    font-size: 0.875rem;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.font-medium {
+    font-weight: 500;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.6s ease-in;
+.text-center {
+    text-align: center;
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateY(-100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+/* Footer Styling */
+footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
 }
 
-.animate-slide-in {
-    animation: slideIn 0.6s ease-out;
-}
-
-/* Weather Icon Styling */
-#weather-icon {
-    font-size: 3rem;
-    animation: pulse 2s infinite;
-}
-
-/* Responsive Design */
+/* Media Query */
 @media (max-width: 768px) {
-    #weather-icon {
-        font-size: 2.5rem;
+    .card {
+        width: 100%;
     }
 
-    #temp {
-        font-size: 2rem;
-    }
-
-    .text-lg {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    #weather-icon {
-        font-size: 2rem;
-    }
-
-    #temp {
-        font-size: 1.5rem;
-    }
-
-    .text-lg {
-        font-size: 0.875rem;
-    }
-}
-
-/* Animation for Icon */
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
+    .search-box {
+        flex-direction: column;
     }
 }
