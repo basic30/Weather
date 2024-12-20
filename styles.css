@@ -175,51 +175,72 @@ body {
     }
 }
 
-/* Keyframes for falling animation */
-@keyframes letterFall {
+.fall-text {
+    display: inline-flex;
+    font-size: 2rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+}
+
+.fall-text span,
+.fall-icon {
+    display: inline-block;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(-100vh); /* Start above the viewport */
+    animation: fall 0.8s ease-out forwards; /* Animation applied to each */
+}
+
+.fall-icon {
+    font-size: 3rem;
+    animation-delay: 0.1s; /* The cloud falls first */
+}
+
+.fall-text span:nth-child(1) {
+    animation-delay: 0.3s;
+}
+.fall-text span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.fall-text span:nth-child(3) {
+    animation-delay: 0.5s;
+}
+.fall-text span:nth-child(4) {
+    animation-delay: 0.6s;
+}
+.fall-text span:nth-child(5) {
+    animation-delay: 0.7s;
+}
+.fall-text span:nth-child(6) {
+    animation-delay: 0.8s;
+}
+.fall-text span:nth-child(7) {
+    animation-delay: 0.9s;
+}
+.fall-text span:nth-child(8) {
+    animation-delay: 1s;
+}
+.fall-text span:nth-child(9) {
+    animation-delay: 1.1s;
+}
+.fall-text span:nth-child(10) {
+    animation-delay: 1.2s;
+}
+.fall-text span:nth-child(11) {
+    animation-delay: 1.3s;
+}
+
+@keyframes fall {
     0% {
-        transform: translateY(-100vh); /* Start off-screen */
-        opacity: 0; /* Invisible at start */
+        opacity: 0;
+        transform: translateY(-100vh); /* Start above screen */
     }
     80% {
-        transform: translateY(10px); /* Slight bounce */
-        opacity: 1; /* Fully visible */
+        opacity: 1;
+        transform: translateY(10px); /* Slight bounce effect */
     }
     100% {
-        transform: translateY(0); /* Settle in position */
+        opacity: 1;
+        transform: translateY(0); /* Stop in final position */
     }
 }
-
-/* Cloud icon animation */
-#cloud-icon {
-    display: inline-block;
-    font-size: 2.5rem; /* Adjust icon size */
-    color: #ffffff;
-    animation: letterFall 1s ease-out;
-    animation-fill-mode: forwards;
-    opacity: 0; /* Initially invisible */
-    animation-delay: 0s; /* Cloud falls first */
-}
-
-/* Letter animation */
-#weather-now-text span {
-    display: inline-block;
-    font-size: 2rem; /* Adjust font size */
-    color: #ffffff;
-    animation: letterFall 1s ease-out;
-    animation-fill-mode: forwards;
-    opacity: 0; /* Initially invisible */
-}
-
-/* Add delay for staggered effect */
-#weather-now-text span:nth-child(2) { animation-delay: 0.3s; }
-#weather-now-text span:nth-child(3) { animation-delay: 0.4s; }
-#weather-now-text span:nth-child(4) { animation-delay: 0.5s; }
-#weather-now-text span:nth-child(5) { animation-delay: 0.6s; }
-#weather-now-text span:nth-child(6) { animation-delay: 0.7s; }
-#weather-now-text span:nth-child(7) { animation-delay: 0.8s; }
-#weather-now-text span:nth-child(8) { animation-delay: 0.9s; }
-#weather-now-text span:nth-child(9) { animation-delay: 1s; }
-#weather-now-text span:nth-child(10) { animation-delay: 1.1s; }
-#weather-now-text span:nth-child(11) { animation-delay: 1.2s; }
-#weather-now-text span:nth-child(12) { animation-delay: 1.3s; }
