@@ -85,7 +85,7 @@ document.getElementById("search-button").addEventListener("click", () => {
         fetchWeather(city);
 
         // Reset animations for weather-now-text spans
-        const elements = document.querySelectorAll("#weather-now-text span");
+        const elements = document.querySelectorAll(".fall-text span, .fall-icon");
         elements.forEach((element) => {
             element.style.animation = "none"; // Reset animation
             void element.offsetWidth; // Trigger reflow
