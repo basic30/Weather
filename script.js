@@ -77,11 +77,20 @@ function displayWeather(data) {
 
 // Handle Search Button Click
 document.getElementById("search-button").addEventListener("click", () => {
+    // Fetch Weather Data
     const cityInput = document.getElementById("city");
     const city = cityInput ? cityInput.value.trim() : "";
 
     if (city) {
         fetchWeather(city);
+
+        // Reset animations for weather-now-text spans
+        const elements = document.querySelectorAll("#weather-now-text span");
+        elements.forEach((element) => {
+            element.style.animation = "none"; // Reset animation
+            void element.offsetWidth; // Trigger reflow
+            element.style.animation = ""; // Reapply animation
+        });
     } else {
         alert("Please enter a city name.");
     }
