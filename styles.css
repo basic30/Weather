@@ -192,7 +192,7 @@ body {
 }
 
 .fall-icon {
-    font-size: 3rem;
+    font-size: 2rem;
     animation-delay: 0.1s; /* The cloud falls first */
 }
 
