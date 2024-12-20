@@ -174,3 +174,26 @@ body {
         display: inline;
     }
 }
+
+/* Keyframes for the falling animation */
+@keyframes fallFromSky {
+    0% {
+        transform: translateY(-100vh); /* Start off-screen */
+        opacity: 0; /* Invisible at the start */
+    }
+    80% {
+        transform: translateY(10px); /* Slight bounce before settling */
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        transform: translateY(0); /* Final position */
+    }
+}
+
+/* Apply the animation to the Weather Now text */
+#weather-now-text {
+    animation: fallFromSky 2s ease-out; /* Duration and easing */
+    position: relative; /* Ensure it's positioned relative to its container */
+    text-align: center;
+    color: #ffffff; /* Customize color */
+}
