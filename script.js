@@ -1,97 +1,163 @@
-// Fetch Weather Data
-async function fetchWeather(city) {
-    const apiKey = "689eb33c48d88f1fb4acbc7ea86949b1"; // Replace with your OpenWeatherMap API key
-    try {
-        const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
-        );
-        const data = await response.json();
+const API_KEY = '689eb33c48d88f1fb4acbc7ea86949b1'; // Replace with your actual API key
 
-        if (response.ok) {
-            displayWeather(data);
-        } else {
-            alert(data.message || "City not found. Please check the name.");
-        }
-    } catch (error) {
-        alert("Error fetching weather data. Please check your network connection and try again.");
-        console.error(error);
-    }
-}
+const searchForm = document.getElementById('searchForm');
+const cityInput = document.getElementById('cityInput');
+const errorMessage = document.getElementById('errorMessage');
+const weatherDisplay = document.getElementById('weatherDisplay');
+const initialMessage = document.getElementById('initialMessage');
 
-// Display Weather Function
-function displayWeather(data) {
-    // Get the weather details section and make it visible
-    const weatherDetails = document.getElementById("weather-details");
-    const locationName = document.getElementById("location");
-    const tempElement = document.getElementById("temp");
-    const descriptionElement = document.getElementById("description");
-    const humidityElement = document.getElementById("humidity");
-    const windElement = document.getElementById("wind");
-    const rainStatusElement = document.getElementById("rain-status");
+searchForm.addEventListener('submit', handleSearch);
 
-    weatherDetails.classList.remove("hidden");
+const searchIcon = document.getElementById('searchIcon');
+const spinner = document.getElementById('spinner');
 
-    // Set location name (city, country)
-    locationName.textContent = `${data.name}, ${data.sys.country}`;
-
-    // Determine weather condition and choose the corresponding icon
-    const weatherCondition = data.weather[0].main.toLowerCase();
-    let weatherIcon = "";
-    if (weatherCondition.includes("clear")) {
-        weatherIcon = "☀"; // Sunny
-    } else if (weatherCondition.includes("cloud")) {
-        weatherIcon = "🌥"; // Cloudy
-    } else if (weatherCondition.includes("rain")) {
-        weatherIcon = "🌧"; // Rainy
-    } else if (weatherCondition.includes("snow")) {
-        weatherIcon = "❄"; // Snow 
-    } else if (weatherCondition.includes("haze")) {
-        weatherIcon = "🌫"; // Haze
-    } else {
-        weatherIcon = "🌤"; // Default (partly cloudy)
-    }
-
-    // Update the temperature with the icon
-    tempElement.innerHTML = `${Math.round(data.main.temp)}°C <span class="icon">${weatherIcon}</span>`;
-
-    // Format and display the weather description
-    descriptionElement.textContent = data.weather[0].description
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-
-    // Update humidity
-    humidityElement.textContent = `${data.main.humidity}%`;
-
-    // Update wind speed (converted from m/s to km/h)
-    windElement.textContent = `${(data.wind.speed * 3.6).toFixed(1)} km/h`;
-
-    // Conditionally display the rain status if data is available
-    if (data.rain && data.rain["1h"]) {
-        rainStatusElement.classList.remove("hidden");
-        document.getElementById("rainfall-value").textContent = `${data.rain["1h"]} mm`;
-    } else {
-        rainStatusElement.classList.add("hidden");
-    }
-}
-
-// Handle Search Button Click
-document.getElementById("search-button").addEventListener("click", () => {
-    // Fetch Weather Data
-    const cityInput = document.getElementById("city");
-    const city = cityInput ? cityInput.value.trim() : "";
-
+async function handleSearch(e) {
+    e.preventDefault();
+    const city = cityInput.value.trim();
     if (city) {
-        fetchWeather(city);
-
-        // Reset animations for weather-now-text spans
-        const elements = document.querySelectorAll(".fall-text span, .fall-icon");
-        elements.forEach((element) => {
-            element.style.animation = "none"; // Reset animation
-            void element.offsetWidth; // Trigger reflow
-            element.style.animation = ""; // Reapply animation
-        });
-    } else {
-        alert("Please enter a city name.");
+        // Show the spinner and hide the search icon
+        searchIcon.style.display = 'none';
+        spinner.style.display = 'inline-block';
+        
+        try {
+            const weatherData = await getWeatherData(city);
+            displayWeatherData(weatherData);
+            errorMessage.style.display = 'none';
+            initialMessage.style.display = 'none';
+        } catch (error) {
+            console.error('Error:', error);
+            showError('An error occurred while fetching weather data. Please try again later.');
+        } finally {
+            // Hide the spinner and show the search icon
+            searchIcon.style.display = 'inline-block';
+            spinner.style.display = 'none';
+        }
     }
-});
+}
+
+async function getWeatherData(city) {
+    const geoResponse = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${API_KEY}`
+    );
+    if (!geoResponse.ok) throw new Error('Unable to find location');
+    const geoData = await geoResponse.json();
+    if (!geoData.length) throw new Error('City not found');
+
+    const { lat, lon } = geoData[0];
+    const currentWeatherResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+    );
+    if (!currentWeatherResponse.ok) throw new Error('Unable to fetch current weather');
+    const currentWeather = await currentWeatherResponse.json();
+
+    const forecastResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+    );
+    if (!forecastResponse.ok) throw new Error('Unable to fetch forecast');
+    const forecastData = await forecastResponse.json();
+
+    const hourlyForecast = forecastData.list.slice(0, 6).map(item => ({
+        time: new Date(item.dt * 1000).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+        temp: Math.round(item.main.temp),
+        icon: item.weather[0].icon
+    }));
+
+    const dailyForecast = forecastData.list.reduce((acc, item) => {
+        const date = new Date(item.dt * 1000).toLocaleDateString('en-US');
+        if (!acc.find(d => d.date === date)) {
+            acc.push({
+                date,
+                day: new Date(item.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }),
+                highTemp: Math.round(item.main.temp_max),
+                lowTemp: Math.round(item.main.temp_min),
+                icon: item.weather[0].icon
+            });
+        }
+        return acc;
+    }, []).slice(0, 5);
+
+    return {
+    location: `${geoData[0].name}, ${geoData[0].country}`,
+    currentTemp: Math.round(currentWeather.main.temp),
+    condition: currentWeather.weather[0].main,
+    conditionIcon: currentWeather.weather[0].icon, // Add this line
+    highTemp: Math.round(currentWeather.main.temp_max),
+    lowTemp: Math.round(currentWeather.main.temp_min),
+    hourlyForecast,
+    dailyForecast,
+    precipitation: `${currentWeather.clouds?.all || 0}%`,
+    humidity: `${currentWeather.main.humidity}%`,
+    wind: `${(currentWeather.wind.speed * 3.6).toFixed(1)} km/h`
+};
+}
+
+function displayWeatherData(weatherData) {
+    const weatherHTML = `
+    <div class="weather-header">
+        <div>${weatherData.location}</div>
+        <div class="current-weather">Current Weather</div>
+    </div>
+    <div class="weather-display">
+        <div class="weather-condition">
+            <img src="https://openweathermap.org/img/wn/${weatherData.conditionIcon}@2x.png" alt="${weatherData.condition}">
+            <div class="weather-temp">${weatherData.currentTemp}°C</div>
+        </div>
+        <div class="weather-high-low">
+            <div>H: ${weatherData.highTemp}°C</div>
+            <div>L: ${weatherData.lowTemp}°C</div>
+        </div>
+    </div>
+<div class="section-separator"></div>    
+    <div class="weather-section">
+        <h3>Hourly Forecast</h3>
+        <div class="hourly-forecast">
+            ${weatherData.hourlyForecast.map(hour => `
+                <div class="hourly-item">
+                    <img src="https://openweathermap.org/img/wn/${hour.icon}@2x.png" alt="${hour.temp}°C">
+                    <div>${hour.time}</div>
+                    <div>${hour.temp}°C</div>
+                </div>
+            `).join('')}
+        </div>
+    </div>
+    <div class="section-separator"></div> 
+    <div class="weather-section">
+        <h3>5-Day Forecast</h3>
+        <div class="daily-forecast">
+            ${weatherData.dailyForecast.map(day => `
+                <div class="daily-item">
+                    <img src="https://openweathermap.org/img/wn/${day.icon}@2x.png" alt="icon">
+                    <div>${day.day}</div>
+                    <div>${day.highTemp}°C / ${day.lowTemp}°C</div>
+                </div>
+            `).join('')}
+        </div>
+    </div>
+   <div class="section-separator"></div> 
+    <div class="weather-details">
+    <div class="detail-box">
+        <h4>Precipitation</h4>
+        <img src="https://openweathermap.org/img/wn/09d@2x.png" alt="precipitation-icon" style="width: 30px;">
+        <p>${weatherData.precipitation}</p>
+    </div>
+    <div class="detail-box">
+        <h4>Humidity</h4>
+        <img src="https://openweathermap.org/img/wn/50d@2x.png" alt="humidity-icon" style="width: 30px;">
+        <p>${weatherData.humidity}</p>
+    </div>
+    <div class="detail-box">
+        <h4>Wind</h4>
+        <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="wind-icon" style="width: 30px;">
+        <p>${weatherData.wind}</p>
+    </div>
+</div>
+`;
+
+    // Insert the generated HTML into the weather display container
+    weatherDisplay.innerHTML = weatherHTML;
+
+    // Add animation
+    const weatherContainer = document.querySelector('.weather-container');
+    weatherContainer.classList.remove('hidden');
+    setTimeout(() => weatherContainer.classList.add('visible'), 100);
+}
