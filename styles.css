@@ -230,8 +230,9 @@ body {
 
 /* Initial Message */
 .initial-message {
+    display:flex;
     text-align: center;
-    font-size: 16px;
+    font-size: 1rem;
     margin-top: 0rem;
 }
 
