@@ -77,7 +77,7 @@ async function getWeatherData(city) {
     }, []).slice(0, 5);
 
     return {
-    location: `${geoData[0].name}, ${geoData[0].country}`,
+    location: `${geoData[0].name}, ${geoData[0].state || geoData[0].country}`,
     currentTemp: Math.round(currentWeather.main.temp),
     condition: currentWeather.weather[0].main,
     conditionIcon: currentWeather.weather[0].icon, // Add this line
