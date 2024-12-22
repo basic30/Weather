@@ -5,71 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Now</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.12.16/dist/framer-motion.min.js"></script>
 </head>
 <body>
-    <div class="min-h-screen bg-gradient p-4 flex-center">
-        <div class="card w-full max-w-md animate-slide-in">
-            <div class="card-header">
-    <h1 class="card-title">
-        <span class="fall-icon"><i class="fas fa-cloud"></i></span>
-        <div id="weather-now-text" class="fall-text">
-            <span>W</span>
-            <span>e</span>
-            <span>a</span>
-            <span>t</span>
-            <span>h</span>
-            <span>e</span>
-            <span>r</span>
-            <span>&nbsp;</span>
-            <span>N</span>
-            <span>o</span>
-            <span>w</span>
-        </div>
-    </h1>
-            </div>
-            <div class="card-content">
-                <div class="search-box">
-                    <input type="text" id="city" placeholder="Enter a city name" autofocus required>
-                    <button id="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-
-                <div id="weather-details" class="hidden mt-6 space-y-4 animate-fade-in">
-                    <h2 id="location" class="text-center"></h2>
-                    <div class="flex-center gap-4">
-                        <i id="weather-icon" class="h-16 w-16 text-blue-500"></i>
-                        <div class="temperature text-4xl font-bold" id="temp">--</span></div>
-                    </div>
-                    <div id="description" class="text-center text-lg font-medium"></div>
-                    <div class="grid-2 gap-4 pt-4 border-t">
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500">Humidity</div>
-                            <div id="humidity" class="font-medium">--</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500">Wind Speed</div>
-                            <div id="wind" class="font-medium">--</div>
-                        </div>
-                    </div>
-                    <div id="rain-status" class="hidden text-center">
-                        <div class="text-sm text-gray-500">Rainfall</div>
-                        <div id="rainfall" class="font-medium">--</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer class="mt-4 text-sm text-center text-gray-600">
-            Made By Snahasish. Download the App: 
-            <a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">
+    <main class="container">
+        <h1 class="title fade-in">Weather Now</h1>
+        <form id="searchForm" class="search-form">
+            <input type="text" id="cityInput" placeholder="Enter city name..." class="search-input">
+            <button type="submit" class="search-button">
+                <svg id="searchIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <svg id="spinner" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon spinner">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
+                </svg>
+            </button>
+        </form>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="weatherDisplay" class="weather-container hidden"></div>
+        <div id="initialMessage" class="initial-message">This Website Made By Snahasish.<a href="https://drive.google.com/uc?export=download&id=1hmpJW30m6-q25yRbM3ZKE3uT-PLeGM92" target="_blank">
                 Weather Now
-            </a>
-        </footer>
-    </div>
-    
-    <!-- Place the script here -->
+        </a></div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
