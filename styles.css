@@ -113,6 +113,13 @@ body {
     color: White;
 }
 
+.weather-condition-text {
+    font-size: 1rem;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
 .weather-condition img {
     width: 60px;
     height: 60px;
