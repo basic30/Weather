@@ -227,7 +227,7 @@ body {
 /* Spinner */
 .spinner {
     display: none;
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 20px; /* Adjust size as needed */
     animation: spin 1s linear infinite;
 }
 
