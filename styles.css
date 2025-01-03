@@ -45,7 +45,7 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-#search-button {
+.search-button {
     padding: 10px 20px;
     background-color: #ffc107; /* Red button */
     color: white;
